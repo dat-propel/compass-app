@@ -1,0 +1,19 @@
+steps:
+  # Step 1: Remove the 'dist' directory
+  - name: 'gcr.io/cloud-builders/yarn'
+    entrypoint: 'sh'
+    args: ['-c', 'rm -rf dist']
+
+  # Step 2: Install dependencies
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['install']
+
+  # Step 3: Build the React application
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['build']
+
+  # Step 4: Deploy to App Engine
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy']
+
+timeout: '1600s'  # Adjust the timeout to your needs

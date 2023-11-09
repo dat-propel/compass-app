@@ -9,7 +9,9 @@ function App() {
   const [data, setData] = useState('');
 
   const requestApi = useCallback(async () => {
-    const response = await axios.get('http://localhost:5156/WeatherForecast');
+    const response = await axios.get(
+      'https://compass-backend-dot-steel-apparatus-404601.as.r.appspot.com/WeatherForecast',
+    );
     if (response) {
       setData(JSON.stringify(response.data));
     }

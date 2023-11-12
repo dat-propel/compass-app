@@ -1,42 +1,86 @@
-import { useCallback, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import axios from 'axios';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import {
+    Admin,
+    CustomRoutes,
+    Resource,
+    localStorageStore,
+    useStore,
+    StoreContextProvider,
+} from 'react-admin';
+import { Route } from 'react-router';
 
-function App() {
-  const [data, setData] = useState('');
+import authProvider from './authProvider';
+import categories from './categories';
+import { Dashboard } from './dashboard';
+import dataProviderFactory from './dataProvider';
+import englishMessages from './i18n/en';
+import invoices from './invoices';
+import { Layout, Login } from './layout';
+import orders from './orders';
+import products from './products';
+import reviews from './reviews';
+import Segments from './segments/Segments';
+import visitors from './visitors';
+import { themes, ThemeName } from './themes/themes';
 
-  const requestApi = useCallback(async () => {
-    const response = await axios.get(
-      'https://compass-backend-dot-steel-apparatus-404601.as.r.appspot.com/WeatherForecast',
+const i18nProvider = polyglotI18nProvider(
+    locale => {
+        if (locale === 'fr') {
+            return import('./i18n/fr').then(messages => messages.default);
+        }
+
+        // Always fallback on english
+        return englishMessages;
+    },
+    'en',
+    [
+        { locale: 'en', name: 'English' },
+        { locale: 'fr', name: 'Français' },
+    ]
+);
+
+const store = localStorageStore(undefined, 'ECommerce');
+
+const App = () => {
+    const [themeName] = useStore<ThemeName>('themeName', 'soft');
+    const lightTheme = themes.find(theme => theme.name === themeName)?.light;
+    const darkTheme = themes.find(theme => theme.name === themeName)?.dark;
+    return (
+        <Admin
+            title=""
+            dataProvider={dataProviderFactory('')}
+            store={store}
+            authProvider={authProvider}
+            dashboard={Dashboard}
+            loginPage={Login}
+            layout={Layout}
+            i18nProvider={i18nProvider}
+            disableTelemetry
+            lightTheme={lightTheme}
+            darkTheme={darkTheme}
+            defaultTheme="light"
+        >
+            <CustomRoutes>
+                <Route path="/segments" element={<Segments />} />
+            </CustomRoutes>
+            <Resource name="customers" {...visitors} />
+            <Resource
+                name="commands"
+                {...orders}
+                options={{ label: 'Orders' }}
+            />
+            <Resource name="invoices" {...invoices} />
+            <Resource name="products" {...products} />
+            <Resource name="categories" {...categories} />
+            <Resource name="reviews" {...reviews} />
+        </Admin>
     );
-    if (response) {
-      setData(JSON.stringify(response.data));
-    }
-  }, []);
+};
 
-  return (
-    <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={requestApi}>call api</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p id='response'>{data}</p>
-      <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-    </>
-  );
-}
+const AppWrapper = () => (
+    <StoreContextProvider value={store}>
+        <App />
+    </StoreContextProvider>
+);
 
-export default App;
+export default AppWrapper;

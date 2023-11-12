@@ -5,12 +5,11 @@ import VisitorCreate from './VisitorCreate';
 import VisitorEdit from './VisitorEdit';
 
 const resource = {
-    list: VisitorList,
-    create: VisitorCreate,
-    edit: VisitorEdit,
-    icon: VisitorIcon,
-    recordRepresentation: (record: any) =>
-        `${record.first_name} ${record.last_name}`,
+  list: VisitorList,
+  create: VisitorCreate,
+  edit: VisitorEdit,
+  icon: VisitorIcon,
+  recordRepresentation: (record: any) => `${record.first_name} ${record.last_name}`,
 };
 
 export default resource;

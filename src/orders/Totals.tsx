@@ -6,63 +6,59 @@ import { Order } from '../types';
 import { TableCellRight } from './TableCellRight';
 
 const Totals = () => {
-    const record = useRecordContext<Order>();
-    const translate = useTranslate();
+  const record = useRecordContext<Order>();
+  const translate = useTranslate();
 
-    return (
-        <Table sx={{ minWidth: '35em' }}>
-            <TableBody>
-                <TableRow>
-                    <TableCell>
-                        {translate('resources.commands.fields.basket.sum')}
-                    </TableCell>
-                    <TableCellRight>
-                        {record?.total_ex_taxes.toLocaleString(undefined, {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}
-                    </TableCellRight>
-                </TableRow>
-                <TableRow>
-                    <TableCell>
-                        {translate('resources.commands.fields.basket.delivery')}
-                    </TableCell>
-                    <TableCellRight>
-                        {record?.delivery_fees.toLocaleString(undefined, {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}
-                    </TableCellRight>
-                </TableRow>
-                <TableRow>
-                    <TableCell>
-                        {translate('resources.commands.fields.basket.taxes')} (
-                        {record?.tax_rate.toLocaleString(undefined, {
-                            style: 'percent',
-                        })}
-                        )
-                    </TableCell>
-                    <TableCellRight>
-                        {record?.taxes.toLocaleString(undefined, {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}
-                    </TableCellRight>
-                </TableRow>
-                <TableRow>
-                    <TableCell sx={{ fontWeight: 'bold' }}>
-                        {translate('resources.commands.fields.basket.total')}
-                    </TableCell>
-                    <TableCellRight sx={{ fontWeight: 'bold' }}>
-                        {record?.total.toLocaleString(undefined, {
-                            style: 'currency',
-                            currency: 'USD',
-                        })}
-                    </TableCellRight>
-                </TableRow>
-            </TableBody>
-        </Table>
-    );
+  return (
+    <Table sx={{ minWidth: '35em' }}>
+      <TableBody>
+        <TableRow>
+          <TableCell>{translate('resources.commands.fields.basket.sum')}</TableCell>
+          <TableCellRight>
+            {record?.total_ex_taxes.toLocaleString(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </TableCellRight>
+        </TableRow>
+        <TableRow>
+          <TableCell>{translate('resources.commands.fields.basket.delivery')}</TableCell>
+          <TableCellRight>
+            {record?.delivery_fees.toLocaleString(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </TableCellRight>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            {translate('resources.commands.fields.basket.taxes')} (
+            {record?.tax_rate.toLocaleString(undefined, {
+              style: 'percent',
+            })}
+            )
+          </TableCell>
+          <TableCellRight>
+            {record?.taxes.toLocaleString(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </TableCellRight>
+        </TableRow>
+        <TableRow>
+          <TableCell sx={{ fontWeight: 'bold' }}>
+            {translate('resources.commands.fields.basket.total')}
+          </TableCell>
+          <TableCellRight sx={{ fontWeight: 'bold' }}>
+            {record?.total.toLocaleString(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </TableCellRight>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
 };
 
 export default Totals;

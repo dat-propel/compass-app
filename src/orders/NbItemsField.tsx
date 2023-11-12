@@ -7,8 +7,8 @@ const render = (record: Order) => record.basket.length;
 const NbItemsField = () => <FunctionField<Order> render={render} />;
 
 NbItemsField.defaultProps = {
-    label: 'resources.commands.fields.nb_items',
-    textAlign: 'right',
+  label: 'resources.commands.fields.nb_items',
+  textAlign: 'right',
 };
 
 export default NbItemsField;

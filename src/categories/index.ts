@@ -4,7 +4,7 @@ import CategoryList from './CategoryList';
 import CategoryEdit from './CategoryEdit';
 
 export default {
-    list: CategoryList,
-    edit: CategoryEdit,
-    icon: CategoryIcon,
+  list: CategoryList,
+  edit: CategoryEdit,
+  icon: CategoryIcon,
 };

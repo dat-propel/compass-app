@@ -134,7 +134,6 @@ const Dashboard = () => {
                 <div style={styles.rightCol}>
                     <div style={styles.flex}>
                         <PendingReviews />
-                        <Spacer />
                         <NewCustomers />
                     </div>
                 </div>
